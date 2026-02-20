@@ -51,7 +51,7 @@ const Navbar = ({ userName }: Props) => {
       <div className="flex items-center gap-4">
 
        
-        <div className="w-px h-6 bg-slate-200"></div>
+        <div className="w-px h-12 bg-slate-200"></div>
 
         
         <LogoutBtn />
