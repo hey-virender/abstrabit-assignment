@@ -1,5 +1,8 @@
+import Bookmark from "@/components/Bookmark";
+import Navbar from "@/components/Navbar";
+import { bookmarks } from "@/constants";
 import { createClient } from "@/supabase/server";
-import Image from "next/image";
+
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -13,7 +16,20 @@ export default async function Home() {
 
   return (
     <main>
-      <h1>Welcome, {data.session.user.user_metadata?.name || "User"}</h1>
+      <Navbar userName={data.session.user.user_metadata?.name || "User"}/>
+      <section className="p-3">
+        <h2>Your Bookmarks</h2>
+        <div className="flex gap-4">
+          {bookmarks.map((bookmark) => (
+            <Bookmark
+              key={bookmark.id}
+              id={bookmark.id}
+              title={bookmark.title}
+              url={bookmark.url}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

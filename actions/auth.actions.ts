@@ -16,3 +16,9 @@ if (data.url) {
   redirect(data.url) // use the redirect API for your server framework
 }
 };
+
+export const logout = async () => {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/login");
+}
