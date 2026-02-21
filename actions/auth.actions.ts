@@ -13,7 +13,8 @@ export const signInWithGoogle = async () => {
   },
 })
 if (data.url) {
-  redirect(data.url) // use the redirect API for your server framework
+  console.log("Redirecting to:", data.url);
+  redirect(data.url) 
 }
 };
 
