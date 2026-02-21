@@ -1,5 +1,6 @@
 "use client";
 
+import { createBookmark } from "@/actions/bookmark.actions";
 import { supabaseClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,9 +36,12 @@ export default function CreateBookmarkPage() {
 
       // Insert logic here later
       console.log({ title, url });
+      const response = await createBookmark(title, url);
+      console.log("Bookmark created:", response);
 
       setTitle("");
       setUrl("");
+      router.push("/");
     } catch (err) {
       console.error(err);
     } finally {

@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
-
+import { Trash } from "lucide-react";
+import { deleteBookmark } from "@/actions/bookmark.actions";
 
 type Props = {
   url: string;
@@ -8,9 +10,17 @@ type Props = {
 };
 
 const Bookmark = ({ url, id, title }: Props) => {
+  const handleDelete = async () => {
+    try {
+      const reponse = await deleteBookmark(id);
+      console.log("Bookmark deleted:", reponse);
+    } catch (error) {
+      console.error("Error deleting bookmark:", error);
+    }
+  };
   return (
     <div
-      className="
+      className="relative
         group
         bg-white
         border border-slate-200
@@ -25,11 +35,9 @@ const Bookmark = ({ url, id, title }: Props) => {
         w-full
       "
     >
-      
       <div className="flex items-start gap-3">
-
-        
-        <div className="
+        <div
+          className="
           min-w-10 min-h-10
           rounded-lg
           bg-slate-100
@@ -37,20 +45,21 @@ const Bookmark = ({ url, id, title }: Props) => {
           text-slate-600
           font-semibold text-sm
           border border-slate-200
-        ">
+        "
+        >
           {title.charAt(0).toUpperCase()}
         </div>
 
-        
         <div className="flex flex-col overflow-hidden">
-
-          <h2 className="
+          <h2
+            className="
             text-slate-800
             font-semibold
             text-base
             leading-tight
             truncate
-          ">
+          "
+          >
             {title}
           </h2>
 
@@ -68,15 +77,10 @@ const Bookmark = ({ url, id, title }: Props) => {
           >
             {url}
           </Link>
-
         </div>
-
       </div>
 
-     
       <div className="flex items-center justify-between mt-4">
-
-      
         <Link
           href={url}
           target="_blank"
@@ -90,18 +94,13 @@ const Bookmark = ({ url, id, title }: Props) => {
         >
           Visit →
         </Link>
-
-    
-        <div className="
-          opacity-0
-          group-hover:opacity-100
-          transition-opacity
-          text-xs text-slate-400
-        ">
-          ID: {id.slice(0, 6)}
-        </div>
-
       </div>
+      <button
+        className="absolute top-4 right-4 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity"
+        onClick={handleDelete}
+      >
+        <Trash className="text-red-500 size-6" />
+      </button>
     </div>
   );
 };
